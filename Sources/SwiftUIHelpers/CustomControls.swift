@@ -83,6 +83,12 @@ public struct SelectableRow:View {
     public var select:()->()
     public var deselect:()->()
     
+    public init(title:String, selected:Bool, select:@escaping ()->(), deselect:@escaping ()->()){
+        self.title = title
+        self.selected = selected
+        self.select = select
+        self.deselect = deselect
+    }
 
     public var body: some View{
         Button(action: {selected.toggle()}, label: {  HStack{
