@@ -5,7 +5,7 @@ import PackageDescription
 import SwiftUI
 
 let package = Package(
-    name: "SwiftUIX",
+    name: "SwiftUIHelpers",
     platforms: [
         .iOS(.v14),
         .macOS(.v11),
