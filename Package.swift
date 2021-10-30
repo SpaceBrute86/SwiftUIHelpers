@@ -2,9 +2,16 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import SwiftUI
 
 let package = Package(
-    name: "SwiftUIHelpers",
+    name: "SwiftUIX",
+    platforms: [
+        .iOS(.v14),
+        .macOS(.v11),
+        .watchOS(.v7),
+        .tvOS(.v14)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -21,8 +28,5 @@ let package = Package(
         .target(
             name: "SwiftUIHelpers",
             dependencies: []),
-        .testTarget(
-            name: "SwiftUIHelpersTests",
-            dependencies: ["SwiftUIHelpers"]),
     ]
 )
