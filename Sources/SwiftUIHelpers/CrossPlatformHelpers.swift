@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension Binding {
+public extension Binding {
     func didSet(_ didSet: @escaping (Value) -> Void) -> Binding<Value> {
         Binding(
             get: { wrappedValue },

@@ -4,7 +4,7 @@ import SwiftUI
 import AppKit
 
 
-extension NSViewController {
+public extension NSViewController {
     func addSwiftUI<Content:View>(view:Content){
         let childView = NSHostingController(rootView:  view)
         addChild(childView)
@@ -14,7 +14,7 @@ extension NSViewController {
     }
 }
 
-extension NSView {
+public extension NSView {
     func addConstrained(subview: NSView) {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false

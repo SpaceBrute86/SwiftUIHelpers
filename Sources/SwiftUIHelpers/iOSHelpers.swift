@@ -3,7 +3,7 @@ import SwiftUI
 import UIKit
 
 
-extension UIViewController {
+public extension UIViewController {
     @IBAction func dismiss(){
         self.dismiss(animated: true, completion: nil)
     }
@@ -16,7 +16,7 @@ extension UIViewController {
     }
 }
 
-extension UIView {
+public extension UIView {
     func addConstrained(subview: UIView) {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false

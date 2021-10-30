@@ -8,10 +8,10 @@
 import SwiftUI
 
 
-struct OptionalNumberTextField:View{
-    var reference:Binding<Double?>
+public struct OptionalNumberTextField:View{
+    public var reference:Binding<Double?>
 
-    var body: some View { OptionalNumberTextContent(reference: reference, value: { () -> String in
+    public var body: some View { OptionalNumberTextContent(reference: reference, value: { () -> String in
         if let val = reference.wrappedValue { return "\(val)" }
         else {return ""}
     }())}
@@ -29,28 +29,28 @@ struct OptionalNumberTextField:View{
 }
 
 
-struct ArrayPicker<T>:View {
-    var title:String
-    @Binding var item:T
-    var list:[T]
-    var names:[String]
-    @State var idx:Int
+public struct ArrayPicker<T>:View {
+    public var title:String
+    @Binding public var item:T
+    public var list:[T]
+    public var names:[String]
+    @State public var idx:Int
 
-    var body: some View {
+    public var body: some View {
         Picker(title, selection: $idx.didSet{ n in item = list[n] })
         { ForEach(0..<list.count){ n in Text(names[n]) } }.pickerStyle(DefaultPickerStyle())
     }
 }
 
 
-struct ToggledItem<Content: View>:View{
+public struct ToggledItem<Content: View>:View{
     var title:String = ""
     var value:Binding<Bool>
     var content:Content
     
-    init(title:String, value:Binding<Bool>, @ViewBuilder content: () -> Content) { self.title = title; self.value = value; self.content = content()  }
+    public init(title:String, value:Binding<Bool>, @ViewBuilder content: () -> Content) { self.title = title; self.value = value; self.content = content()  }
     
-    var body: some View {
+    public var body: some View {
         ToggledItemContent(title:title, reference: value, value: value.wrappedValue, content: content)
     }
     
@@ -75,16 +75,16 @@ struct ToggledItem<Content: View>:View{
 }
 
 
-struct SelectableRow:View {
-    var title:String
+public struct SelectableRow:View {
+    public var title:String
     @State var selected:Bool{
         didSet { if selected { select() } else { deselect() } }
     }
-    var select:()->()
-    var deselect:()->()
+    public var select:()->()
+    public var deselect:()->()
     
 
-    var body: some View{
+    public var body: some View{
         Button(action: {selected.toggle()}, label: {  HStack{
             Text(title); Spacer()
             if selected  { Image(systemName: "checkmark").padding(.trailing, 5.0) }
