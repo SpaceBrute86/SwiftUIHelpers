@@ -10,6 +10,8 @@ import SwiftUI
 
 public struct OptionalNumberTextField:View{
     public var reference:Binding<Double?>
+    
+    public init(reference:Binding<Double?>) { self.reference = reference }
 
     public var body: some View { OptionalNumberTextContent(reference: reference, value: { () -> String in
         if let val = reference.wrappedValue { return "\(val)" }
@@ -30,14 +32,22 @@ public struct OptionalNumberTextField:View{
 
 
 public struct ArrayPicker<T>:View {
-    public var title:String
-    @Binding public var item:T
-    public var list:[T]
-    public var names:[String]
-    @State public var idx:Int
+    var title:String
+    var item:Binding<T>
+    var list:[T]
+    var names:[String]
+    var idx:State<Int> = State<Int>(wrappedValue: 0)
+    
+    public init(title:String, item:Binding<T>, list:[T], names:[String], idx:Int){
+        self.title = title
+        self.item = item
+        self.list=list
+        self.names = names
+        self.idx.wrappedValue = idx
+    }
 
     public var body: some View {
-        Picker(title, selection: $idx.didSet{ n in item = list[n] })
+        Picker(title, selection: idx.projectedValue.didSet{ n in item.wrappedValue = list[n] })
         { ForEach(0..<list.count){ n in Text(names[n]) } }.pickerStyle(DefaultPickerStyle())
     }
 }
