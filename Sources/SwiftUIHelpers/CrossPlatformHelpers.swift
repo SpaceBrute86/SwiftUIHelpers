@@ -14,7 +14,7 @@ public extension Binding {
 
 
 extension String:Identifiable  {
-    var hasSpaces:Bool { return self.components(separatedBy: .whitespaces).count > 1 }
+    public var hasSpaces:Bool { return self.components(separatedBy: .whitespaces).count > 1 }
     public var id:String { return self }
 }
 extension Array:Identifiable where Element:Identifiable{
