@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available (iOS 14, macOS 12, *)
 public extension View {
     func window<Root:View>(isPresented:Binding<Bool>, @ViewBuilder content:@escaping ()->Root) -> some View {
         modifier(Window(isPresented: isPresented, identifier:"Test", content: content))
