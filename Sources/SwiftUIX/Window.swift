@@ -78,7 +78,7 @@ class WindowWrapper:ObservableObject{
 }
 
 @available (macOS 12, *)
-func wrappedWindows()->some Scene {
+public var wrappedWindows:some Scene {
     return WindowGroup{
         ContainerView()
     }.handlesExternalEvents(matching: Set(arrayLiteral: "ShowWindow"))
