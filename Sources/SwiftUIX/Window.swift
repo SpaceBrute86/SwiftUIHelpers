@@ -17,7 +17,12 @@ public extension View {
 struct Window<Root:View>:ViewModifier{
     @Binding var isPresented:Bool
     var content: ()->Root
-    func body(content: Content) -> some View { HStack{ content; MakerRep(isPresented: $isPresented, content: self.content) } }
+    func body(content: Content) -> some View {
+        ZStack{
+            MakerRep(isPresented: $isPresented, content: self.content)
+            content
+        }
+    }
 }
 
 struct MakerRep<Root:View>:NSViewRepresentable {
