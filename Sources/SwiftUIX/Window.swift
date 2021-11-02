@@ -20,7 +20,10 @@ struct Window<Root:View>:ViewModifier{
     func body(content: Content) -> some View { HStack{ content; MakerRep(isPresented: $isPresented, content: self.content) } }
 }
 
-struct MakerRep<Root:View>:NSViewControllerRepresentable {
+struct MakerRep<Root:View>:NSViewRepresentable {
+    
+    typealias NSViewType = NSView
+    
     var isPresented:Binding<Bool>
     @State var manager : WindowManager<Root>
     
@@ -28,13 +31,13 @@ struct MakerRep<Root:View>:NSViewControllerRepresentable {
         self.manager = WindowManager(isPresented: isPresented, content: content)
         self.isPresented = isPresented
     }
-    func makeNSViewController(context: Context) -> NSViewController {
+    func makeNSView(context: Context) -> NSView {
         manager.isPresented = isPresented
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: manager.showWindow)
-        return NSViewController()
+        return NSView(frame: .zero)//NSViewController()
     }
-    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
-        nsViewController.view.frame.size = CGSize.zero
+    func updateNSView(_ nsView: NSView, context: Context) {
+        nsView.frame.size = CGSize.zero
         manager.isPresented = isPresented
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: manager.showWindow)
     }
