@@ -102,7 +102,10 @@ struct ContainerView:View{
     }
     
     var body: some View{
-        maker.load().onAppear{  maker.state = .presented  }.onDisappear{ maker.dismiss()  }
+        maker.load().onAppear{
+            maker.state = .presented
+            if maker.id == "PLACEHOLDER" { dismiss() }
+        }.onDisappear{ maker.dismiss()  }
     }
 }
 
