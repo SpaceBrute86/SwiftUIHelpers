@@ -21,26 +21,45 @@ struct Window<Root:View>:ViewModifier{
 }
 
 struct MakerRep<Root:View>:NSViewControllerRepresentable {
-    @Binding var isPresented:Bool
+    var isPresented:Binding<Bool>
+    @State var manager : WindowManager<Root>
+    
+    init(isPresented:Binding<Bool>, content:@escaping ()->Root){
+        self.manager = WindowManager(isPresented: isPresented, content: content)
+        self.isPresented = isPresented
+    }
+    func makeNSViewController(context: Context) -> NSViewController {
+        manager.isPresented = isPresented
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: manager.showWindow)
+        return NSViewController()
+    }
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
+        nsViewController.view.frame.size = CGSize.zero
+        manager.isPresented = isPresented
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: manager.showWindow)
+    }
+}
+
+class WindowManager<Root:View>: NSObject, NSWindowDelegate {
+    var isPresented:Binding<Bool> = Binding<Bool>(get: {false}, set: {_ in})
+    var window:NSWindow?
     var content: ()->Root
-    @State var window:NSWindow?
+    
+    init(isPresented:Binding<Bool>, content:@escaping ()->Root){
+        self.isPresented = isPresented; self.content = content
+    }
     
     func showWindow(){
+        guard isPresented.wrappedValue else { window?.close(); window = nil; return }
         guard window == nil else { return }
         window = NSWindow(contentViewController: NSHostingController(rootView: content()))
         window!.center()
         window!.isReleasedWhenClosed = false
         window!.makeKeyAndOrderFront(nil)
+        window!.delegate = self
     }
-    func makeNSViewController(context: Context) -> NSViewController {
-        if isPresented { showWindow() }
-        else { window?.close(); window = nil }
-        return NSViewController()
-    }
-    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
-        nsViewController.view.frame.size = CGSize.zero
-        if isPresented { showWindow() }
-        else { window?.close(); window = nil }
+    func windowWillClose(_ notification: Notification) {
+        isPresented.wrappedValue = false
     }
 }
 
