@@ -55,8 +55,11 @@ class WindowManager<Root:View>: NSObject, NSWindowDelegate {
     func showWindow(){
         guard isPresented.wrappedValue else { window?.close(); window = nil; return }
         guard window == nil else { return }
-        window = NSWindow(contentViewController: NSHostingController(rootView: content()))
+        let view = content()
+        let vc = NSHostingController(rootView: view)
+        window = NSWindow(contentViewController: vc)
         window!.center()
+        window!.contentMinSize = vc.view.intrinsicContentSize
         window!.isReleasedWhenClosed = false
         window!.makeKeyAndOrderFront(nil)
         window!.delegate = self
