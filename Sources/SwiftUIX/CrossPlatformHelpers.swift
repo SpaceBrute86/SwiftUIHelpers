@@ -33,8 +33,8 @@ public extension Image { init(image:SuiImage){ self.init(nsImage: image) } }
 
 @available(macOS 12.0, *)
 public extension Color {
-    var background:Color{ Color(nsColor:NSColor.textBackgroundColor) }
-    var label:Color{ Color(nsColor:NSColor.textColor) }
+    static var background:Color{ Color(nsColor:NSColor.textBackgroundColor) }
+    static var label:Color{ Color(nsColor:NSColor.textColor) }
 }
 #else
 import UIKit
@@ -43,11 +43,11 @@ public extension Image { init(image:SuiImage){ self.init(uiImage:image) } }
 @available(iOS 15.0, *)
 public extension Color {
     #if !os(watchOS)
-    var background:Color{ Color(uiColor:UIColor.systemBackground) }
-    var label:Color{ Color(uiColor:UIColor.label) }
+    static var background:Color{ Color(uiColor:UIColor.systemBackground) }
+    static var label:Color{ Color(uiColor:UIColor.label) }
     #else
-    var background:Color{ Color.black }
-    var label:Color{ Color.white }
+    static var background:Color{ Color.black }
+    static var label:Color{ Color.white }
     #endif
 }
 #endif
