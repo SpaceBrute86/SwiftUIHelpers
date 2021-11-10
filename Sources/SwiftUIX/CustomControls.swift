@@ -72,6 +72,14 @@ public struct ToggledItem<Content: View>:View{
 
         var body: some View {
             HStack(spacing:5.0){
+                #if os(macOS) || targetEnvironment(macCatalyst)
+                Toggle(title, isOn: $value.didSet{ val in
+                    reference = val
+                }).padding(.trailing)
+                if value { content }
+                else { content.hidden() }
+                Spacer()
+                #else
                 Text(title).padding(.trailing).lineLimit(1)
                 Spacer()
                 if value { content }
@@ -79,6 +87,7 @@ public struct ToggledItem<Content: View>:View{
                 Toggle("", isOn: $value.didSet{ val in
                     reference = val
                 }).labelsHidden()
+                #endif
             }
         }
     }
