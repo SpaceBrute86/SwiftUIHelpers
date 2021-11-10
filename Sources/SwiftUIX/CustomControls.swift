@@ -78,7 +78,6 @@ public struct ToggledItem<Content: View>:View{
                 }).padding(.trailing)
                 if value { content }
                 else { content.hidden() }
-                Spacer()
                 #else
                 Text(title).padding(.trailing).lineLimit(1)
                 Spacer()
