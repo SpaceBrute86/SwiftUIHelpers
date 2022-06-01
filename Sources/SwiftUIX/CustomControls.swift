@@ -36,15 +36,14 @@ public struct ArrayPicker<T>:View {
     var item:Binding<T>
     var list:[T]
     var names:[String]
-    var idx:State<Int> = State<Int>(wrappedValue: 0)
+    var idx:State<Int>
     
     public init(title:String, item:Binding<T>, list:[T], names:[String], idx:Int){
         self.title = title
         self.item = item
         self.list=list
         self.names = names
-        self.idx.wrappedValue = idx
-        print(idx)
+        self.idx = State<Int>(wrappedValue: idx)
     }
 
     public var body: some View {
