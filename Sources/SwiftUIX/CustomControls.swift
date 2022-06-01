@@ -44,11 +44,12 @@ public struct ArrayPicker<T>:View {
         self.list=list
         self.names = names
         self.idx.wrappedValue = idx
+        self.idx.projectedValue.wrappedValue = idx
     }
 
     public var body: some View {
         Picker(title, selection: idx.projectedValue.didSet{ n in item.wrappedValue = list[n] })
-        { ForEach(0..<list.count){ n in Text(names[n]) } }.pickerStyle(DefaultPickerStyle())
+        { ForEach(0..<list.count, id: \.self){ n in Text(names[n]) } }.pickerStyle(DefaultPickerStyle())
     }
 }
 
