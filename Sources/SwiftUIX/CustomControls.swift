@@ -44,7 +44,7 @@ public struct ArrayPicker<T>:View {
         self.list=list
         self.names = names
         self.idx.wrappedValue = idx
-        self.idx.projectedValue.wrappedValue = idx
+        print(idx)
     }
 
     public var body: some View {
