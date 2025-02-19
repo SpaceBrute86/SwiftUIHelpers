@@ -15,6 +15,13 @@ public struct CommittingNumberField:View{
     @State var set:(Double, Transaction) -> Void
     @State var onCommit:()->()
     
+    public init(titleKey: LocalizedStringKey, get: @escaping () -> Double, set: @escaping (Double, Transaction) -> Void, onCommit: @escaping () -> Void) {
+        self.titleKey = titleKey
+        self.get = get
+        self.set = set
+        self.onCommit = onCommit
+    }
+    
     private enum Field: Hashable { case selected, deselected }
     @FocusState private var focusedField: Field?
     
