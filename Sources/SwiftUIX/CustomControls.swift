@@ -8,6 +8,27 @@
 import SwiftUI
 
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public struct CommittingNumberField:View{
+    @State var titleKey:LocalizedStringKey
+    @State var get:()->Double
+    @State var set:(Double, Transaction) -> Void
+    @State var onCommit:()->()
+    
+    private enum Field: Hashable { case selected, deselected }
+    @FocusState private var focusedField: Field?
+    
+    public var body: some View {
+        Group{
+            TextField(titleKey, value: Binding(get: get, set: set), format: .number)
+                .onSubmit { onCommit() }
+                .focused($focusedField, equals: .selected)
+            //Dummy View
+            if focusedField == .selected {  VStack{ }.onDisappear{ onCommit() }  }
+        }
+    }
+}
+
 public struct OptionalNumberTextField:View{
     public var reference:Binding<Double?>
     
