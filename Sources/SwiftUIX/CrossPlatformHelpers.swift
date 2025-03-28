@@ -2,6 +2,15 @@ import SwiftUI
 
 //MARK: Bindings
 public extension Binding {
+    func willSet(_ willSet: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { wrappedValue },
+            set: { newValue in
+                willSet(wrappedValue)
+                self.wrappedValue = newValue
+            }
+        )
+    }
     func didSet(_ didSet: @escaping (Value) -> Void) -> Binding<Value> {
         Binding(
             get: { wrappedValue },
