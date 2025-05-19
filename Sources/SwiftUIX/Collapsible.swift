@@ -20,11 +20,13 @@ public struct Collapsible<Content: View>: View {
             } label: {
                 HStack {
                     self.label()
+                    #if os(iOS)
                     Spacer()
+                    #endif
                     Image(systemName: self.collapsed ? "chevron.down" : "chevron.up")
                 }
                 .padding(.bottom, 1)
-                .background(Color.white.opacity(0.01))
+                //.background(Color.white.opacity(0.01))
             }.buttonStyle(PlainButtonStyle())
             
             VStack { self.content() }
