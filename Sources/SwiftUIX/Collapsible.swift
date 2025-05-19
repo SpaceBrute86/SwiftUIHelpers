@@ -2,13 +2,18 @@
 
 import SwiftUI
 
-struct Collapsible<Content: View>: View {
-    @State var label: () -> Text
-    @State var content: () -> Content
+public struct Collapsible<Content: View>: View {
+    @State public var label: () -> Text
+    @State public var content: () -> Content
+    
+    public init(label: @autoclosure @escaping () -> Text, @ViewBuilder content: @escaping () -> Content){
+        self.label = label
+        self.content = content
+    }
     
     @State private var collapsed: Bool = true
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Button {
                 self.collapsed.toggle()
